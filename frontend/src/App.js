@@ -12,7 +12,7 @@ import LoginSignup from "./Pages/LoginSignup";
 import SearchResults from "./Pages/SearchResults";
 import Checkout from "./Pages/Checkout";
 
-export const backend_url = 'http://localhost:4000';
+export const backend_url = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 export const currency = '₹';
 
 function App() {
