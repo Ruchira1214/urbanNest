@@ -262,12 +262,28 @@ const port = process.env.PORT || 4000;
 // Middleware
 app.use(express.json());
 // app.use(cors());
+// app.use(cors({
+//   origin: '*',  // or your frontend URL for security
+//   methods: ['GET','POST','PUT','DELETE'],
+//   credentials: true
+// }));
+const allowedOrigins = [
+  'https://urbannest-1-jehf.onrender.com',  // main website
+  'https://urbannest-2.onrender.com'        // admin panel
+];
+
 app.use(cors({
-  origin: '*',  // or your frontend URL for security
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman) or from allowed list
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET','POST','PUT','DELETE'],
   credentials: true
 }));
-
 
 // Database Connection With MongoDB
 mongoose
